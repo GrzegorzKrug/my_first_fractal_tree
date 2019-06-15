@@ -10,6 +10,7 @@ float angle_noise = 0;
 Slider abc;
 
 void setup() {
+  //noLoop();
   size(800, 500);
   //slider1 = new HScrollbar(0, height/2-8, width, 16, 16);
   
@@ -18,31 +19,42 @@ void setup() {
   cp5.addSlider("angleslider")
     .setPosition(100, 50)
     .setSize(150,15)
-    .setRange(-PI/2, PI/2)
+    .setRange(-PI/2, 150)
     
     ;
     
  cp5.addSlider("angle_noise")
    .setPosition(100,70)
    .setSize(150, 15)
-   .setRange(0, PI/6)
+   .setRange(0, 180)
    ;
    
  cp5.addSlider("lenslider")
      .setPosition(100,140)
      .setSize(20,100)
-     .setRange(3,50)
+     .setRange(3,500)
      .setNumberOfTickMarks(20)
      //.setSliderMode(Slider.FLEXIBLE)
      ;    
-
+loop();
 }
 
 
 void draw() {
-  background(51);  
-  stroke(255);
-  //translate(width/2, height);
+  background(angleslider);
+
+  fill(lenslider);
+  rect(0,0,width,100);
+  
+  fill(myColor);
+  rect(0,lenslider,width,70);
+  
+  fill(angle_noise);
+  rect(0,350,width,50);
+  
+  //background(51);  
+  //stroke(255);
+  ////translate(width/2, height);
   //branch(100);
  
 }
