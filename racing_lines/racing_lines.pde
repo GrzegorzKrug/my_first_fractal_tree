@@ -2,7 +2,7 @@ import controlP5.*;
 ControlP5 cp5;
 int sliders_height = 150;
 float slider_curve = 0;
-float slider_speed = 5;
+float slider_speed = 3;
 float slider_vert_accel = 0;
 float slider_noise = 0;
 float slider_amplitude = 1;
@@ -21,14 +21,15 @@ Racer agent1, agent2, agent3, agent4, agent5,
 void setup(){
   size(1300, 800);
   bottom_limit = height - sliders_height - 40 - 1;
+  
   cp5 = new ControlP5(this);  
   place_slider("slider_speed", "Speed", 10);
   place_slider("slider_vert_accel", "Vertical Accel",-1, 1);
   place_slider("slider_curve", "Curvature", 90);
   place_slider("slider_noise", "Noise", 1);
   place_slider("slider_players", "Player num", 10);
-  place_slider("slider_amplitude", "Sin Amplitude", 0, 10);
-  place_slider("slider_freq", "Sin Frequency", 0.1, 3);
+  place_slider("slider_amplitude", "Sin Amplitude", 0, 3);
+  place_slider("slider_freq", "Sin Frequency", 0.15, 1);
   
   agent1 = new Racer();
   agent2 = new Racer();
@@ -86,14 +87,15 @@ class Racer{
             //posY += -vert_speed;
             float angle = 0;
             angle = ((float)posX)* PI / 180; 
-            posY += sin(angle * slider_freq) * slider_amplitude;
+            vert_speed += sin(angle * slider_freq) * slider_amplitude;
+            posY += vert_speed;
         }
         
-        if (vert_speed > 10){
-            vert_speed = 10;
+        if (vert_speed > 5){
+            vert_speed = 5;
         }
-        if (vert_speed < -10){
-            vert_speed = -10;
+        if (vert_speed < -5){
+            vert_speed = -5;
         }
         if (posY > bottom_limit){
             posY = 1;
