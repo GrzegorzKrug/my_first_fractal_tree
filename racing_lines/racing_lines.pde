@@ -7,17 +7,15 @@ float slider_vert_accel = 0;
 float slider_noise = 0;
 float slider_amplitude = 0.1;
 float slider_freq = 0.5;
-
-
 int slider_players = 1;
-int ui_elements = 0;
+
+int ui_elements = 0;  // offset for layout
 int slider_separator = 80;
 
 int bottom_limit;
 
-Racer agent1, agent2, agent3, agent4, agent5,
-      agent6, agent7, agent8, agent9, agent10;
-Racer[] agents = new Racer[100];
+int players = 30;      
+Racer[] agents = new Racer[players];
 
 void setup(){
   size(1300, 800);
@@ -40,20 +38,10 @@ void init_hud()
 }
 
 void new_game(){
-  for(int i=0; i<10; i++)
+  for(int i=0; i<players; i++)
   {
     agents[i] = new Racer();
   }
-  //agent1 = new Racer();
-  //agent2 = new Racer();
-  //agent3 = new Racer();
-  //agent4 = new Racer();
-  //agent5 = new Racer();
-  //agent6 = new Racer();
-  //agent7 = new Racer();
-  //agent8 = new Racer();
-  //agent9 = new Racer();
-  //agent10 = new Racer();
 }
 
 
@@ -64,25 +52,17 @@ void draw(){
   fill(color(235, 240, 255));
   rect(0, height - sliders_height - 40, slider_separator * ui_elements + 20, height);
   
-  for(int i=0; i<10; i++)
+  for(int i=0; i<players; i++)
   {
     agents[i].move();
   }
-  //agent1.move();
-  //agent2.move();
-  //agent3.move();
-  //agent4.move();
-  //agent5.move();
-  //agent6.move();
-  //agent7.move();
-  //agent8.move();
-  //agent9.move();
-  //agent10.move();
+
   
 }
 class Racer{
     int y_start = (int) random(1, 550);
     float random_noise = random(-2, 2);
+    float speed = random(0.5) + 0.2;
     int trail_len = (int) random(50, 150);
     float[] pathX = new float[trail_len];
     float[] pathY = new float[trail_len];
@@ -103,11 +83,11 @@ class Racer{
             //vert_speed = 0;
         }
         else{
-            posX += slider_speed;
+            posX += slider_speed * speed;
             //posY += -vert_speed;
             float angle = 0;
             angle = ((float)posX)* PI / 180; 
-            vert_speed += sin(angle * slider_freq) * slider_amplitude;
+            vert_speed += sin(angle * slider_freq) * slider_amplitude * slider_speed/10;
             vert_speed = vert_speed *  (1 - slider_smooth_flat); 
             
             if (abs(vert_speed) > smooth_edge){
